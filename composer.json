@@ -1,0 +1,22 @@
+{
+    "name": "eriksape/art-unit-testing",
+    "authors": [
+        {
+            "name": "Erik R Sánchez Pérez",
+            "email": "erik@yalochat.com"
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "config": {
+        "platform": {
+            "php": "8.0"
+        }
+    }
+}
