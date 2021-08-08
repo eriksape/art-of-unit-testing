@@ -6,28 +6,22 @@ use PHPUnit\Framework\TestCase;
 
 class LogAnalyzerTest extends TestCase
 {
-    public function test_IsValidFileName_BadExtension_ReturnsFalse(): void
-    {
-        $analyzer = new LogAnalyzer();
-        $result = $analyzer->IsValidLogFileName("filewithbadextension.foo");
-        $this->assertNotTrue($result);
-    }
-
     /**
      * @dataProvider filesToValidate
      */
-    public function test_IsValidLogFileName_ValidExtensions_ReturnsTrue($filename): void
+    public function test_IsValidLogFileName_VariousExtensions_ChecksThem(string $filename, bool $expected): void
     {
         $analyzer = new LogAnalyzer();
         $result = $analyzer->IsValidLogFileName($filename);
-        $this->assertTrue($result);
+        $this->assertEquals($expected, $result);
     }
 
     public function filesToValidate(): array
     {
         return [
-            ['filewithgoodextension.slf'],
-            ['filewithgoodextension.SLF']
+            ['filewithbadextension.foo', false],
+            ['filewithgoodextension.slf', true],
+            ['filewithgoodextension.SLF', true],
         ];
     }
 }
