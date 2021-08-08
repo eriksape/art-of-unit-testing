@@ -13,17 +13,21 @@ class LogAnalyzerTest extends TestCase
         $this->assertNotTrue($result);
     }
 
-    public function test_IsValidFileName_GoodExtensionLowercase_ReturnsFalse(): void
+    /**
+     * @dataProvider filesToValidate
+     */
+    public function test_IsValidLogFileName_ValidExtensions_ReturnsTrue($filename): void
     {
         $analyzer = new LogAnalyzer();
-        $result = $analyzer->IsValidLogFileName("filewithgoodextension.slf");
+        $result = $analyzer->IsValidLogFileName($filename);
         $this->assertTrue($result);
     }
 
-    public function test_IsValidFileName_GoodExtensionUppercase_ReturnsFalse(): void
+    public function filesToValidate(): array
     {
-        $analyzer = new LogAnalyzer();
-        $result = $analyzer->IsValidLogFileName("filewithgoodextension.SLF");
-        $this->assertTrue($result);
+        return [
+            ['filewithgoodextension.slf'],
+            ['filewithgoodextension.SLF']
+        ];
     }
 }
