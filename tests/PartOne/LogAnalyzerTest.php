@@ -1,5 +1,8 @@
 <?php
+namespace PartOne;
+
 use PHPUnit\Framework\TestCase;
+use src\PartOne\LogAnalyzer;
 
 class LogAnalyzerTest extends TestCase
 {

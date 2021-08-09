@@ -1,5 +1,5 @@
 <?php
-
+namespace src\PartOne;
 class MemCalculator
 {
     private int $sum = 0;

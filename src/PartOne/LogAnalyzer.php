@@ -1,4 +1,6 @@
 <?php
+namespace src\PartOne;
+use Exception;
 class LogAnalyzer
 {
     public bool $wasLastFileValid;

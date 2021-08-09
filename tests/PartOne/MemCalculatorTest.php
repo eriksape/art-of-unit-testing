@@ -1,5 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
+use src\PartOne\MemCalculator;
 
 class MemCalculatorTest extends TestCase
 {
