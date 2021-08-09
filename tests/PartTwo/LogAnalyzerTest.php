@@ -3,6 +3,7 @@ namespace PartTwo;
 
 use PHPUnit\Framework\TestCase;
 use src\PartTwo\AlwaysValidFakeExtensionManager;
+use src\PartTwo\ExtensionManagerFactory;
 use src\PartTwo\IExtensionManager;
 use src\PartTwo\LogAnalyzer;
 use Exception;
@@ -22,8 +23,8 @@ class LogAnalyzerTest extends TestCase
     {
         //set up the stub to use, make sure it returns true
         //...
+        ExtensionManagerFactory::SetManager(new AlwaysValidFakeExtensionManager());
         $log = new LogAnalyzer();
-        $log->manager = new AlwaysValidFakeExtensionManager();
         //Assert logic assuming extension is supported
         //...
         $this->assertTrue($log->IsValidLogFileName("someextension.exe"));
