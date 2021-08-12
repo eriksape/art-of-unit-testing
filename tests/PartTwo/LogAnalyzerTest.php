@@ -5,6 +5,7 @@ use PHPUnit\Framework\TestCase;
 use src\PartTwo\AlwaysValidFakeExtensionManager;
 use src\PartTwo\ExtensionManagerFactory;
 use src\PartTwo\IExtensionManager;
+use src\PartTwo\IWebService;
 use src\PartTwo\LogAnalyzer;
 use Exception;
 use src\PartTwo\LogAnalyzerUsingFactoryMethod;
@@ -15,7 +16,8 @@ class LogAnalyzerTest extends TestCase
     {
         $myFakeManager = new FakeExtensionManager();
         $myFakeManager->WillThrow = new Exception("this is fake");
-        $log = new LogAnalyzer ($myFakeManager);
+        //$log = new LogAnalyzer ($myFakeManager);
+        $log = new LogAnalyzer ();
         $result = $log->IsValidLogFileName("anything.anyextension");
         $this->assertFalse($result);
     }
@@ -58,9 +60,19 @@ class LogAnalyzerTest extends TestCase
         $result = $logan->IsValidLogFileName("file.ext");
         $this->assertTrue($result);
     }
+
+    public function test_Analyze_TooShortFileName_CallsWebService():void
+    {
+        $mockService = new FakeWebService();
+        $log = new LogAnalyzer($mockService);
+        $tooShortFileName = 'abc.ext';
+        $log->Analyze($tooShortFileName);
+        $this->assertStringContainsString('Filename too short: abc.ext', $mockService->LastError);
+    }
 }
 
-class FakeExtensionManager implements IExtensionManager {
+class FakeExtensionManager implements IExtensionManager
+{
     public bool $WillBeValid = false;
     public ?Exception $WillThrow = null;
     public function IsValid(string $fileName): bool
@@ -91,5 +103,15 @@ class TestableLogAnalyzer extends LogAnalyzerUsingFactoryMethod
     protected function IsValid(string $filename)
     {
         return $this->IsSupported;
+    }
+}
+
+class FakeWebService implements IWebService
+{
+    public string $LastError = '';
+
+    public function LogError(string $message): void
+    {
+        $this->LastError = $message;
     }
 }
